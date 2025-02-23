@@ -60,3 +60,30 @@ footer {
     width: 100%;
     margin-top: 30px;
 }
+/* Index Page Specific */
+.hero, .latest-episodes, .who-we-are, .hot-takes, .join-us, .merch-preview, .where-to-watch {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.product {
+    display: inline-block;
+    width: 250px;
+    margin: 20px;
+    text-align: center;
+}
+
+.product img {
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+.button {
+    background-color: #FFD700;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #00274D;
+    font-weight: bold;
+    border-radius: 5px;
+    display: inline-block;
+    margin-top: 10px;
