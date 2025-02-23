@@ -142,6 +142,27 @@
         fetchEpisodes();
         fetchMerch();
     </script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const sections = document.querySelectorAll("section");
+        
+        function revealOnScroll() {
+            sections.forEach((section) => {
+                const sectionPos = section.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (sectionPos < windowHeight - 100) {
+                    section.style.opacity = "1";
+                    section.style.transform = "translateY(0)";
+                }
+            });
+        }
+
+        window.addEventListener("scroll", revealOnScroll);
+        revealOnScroll(); // Run on load
+    });
+</script>
+
 
 </body>
 </html>
