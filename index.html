@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Moderate Majority</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
+    <!-- Navigation Bar -->
     <nav>
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
@@ -15,15 +16,132 @@
         <a href="merch.html">Merch</a>
     </nav>
 
-    <div class="container">
+    <!-- Hero Section -->
+    <section class="hero">
         <h1>Welcome to The Moderate Majority</h1>
         <p>Politics that make sense, from the middle.</p>
-        <a href="episodes.html" class="button">Watch Episodes</a>
-    </div>
+        <a href="episodes.html" class="button">Watch Latest Episodes</a>
+    </section>
 
+    <!-- Latest Episodes Section -->
+    <section class="latest-episodes">
+        <h2>Latest Episodes</h2>
+        <div id="episodes-list">Loading episodes...</div>
+    </section>
+
+    <!-- Who We Are Section -->
+    <section class="who-we-are">
+        <h2>Who We Are</h2>
+        <p>The Moderate Majority is your home for **centrist political discussions**, cutting through the noise with **facts, humor, and real talk**.</p>
+        <a href="about.html" class="button">Learn More</a>
+    </section>
+
+    <!-- Social Media Hot Takes -->
+    <section class="hot-takes">
+        <h2>🔥 Hot Takes & Quick Reactions</h2>
+        <p>See our latest takes on today's biggest political issues.</p>
+        <div class="social-embed">
+            <blockquote class="twitter-tweet">
+                <p lang="en" dir="ltr">A preview of our latest breakdown on the upcoming elections! Watch the full video <a href="https://www.youtube.com/@TheModerateMajority">here</a>.</p>
+                &mdash; The Moderate Majority (@ModerateMaj) <a href="https://twitter.com/ModerateMaj/status/123456789">Feb 23, 2025</a>
+            </blockquote>
+            <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        </div>
+    </section>
+
+    <!-- Join the Conversation (Newsletter Signup) -->
+    <section class="join-us">
+        <h2>Join the Conversation</h2>
+        <p>Get our latest political analysis straight to your inbox.</p>
+        <form action="https://formsubmit.co/YOUR_EMAIL" method="POST">
+            <input type="email" name="email" placeholder="Enter your email" required>
+            <button type="submit" class="button">Subscribe</button>
+        </form>
+    </section>
+
+    <!-- Merch Section -->
+    <section class="merch-preview">
+        <h2>🔥 Represent the Middle</h2>
+        <div id="merch-container">Loading merch...</div>
+        <a href="merch.html" class="button">Shop Now</a>
+    </section>
+
+    <!-- Where to Watch -->
+    <section class="where-to-watch">
+        <h2>📢 Where to Watch</h2>
+        <p>Follow us for daily updates & analysis.</p>
+        <a href="https://www.youtube.com/@TheModerateMajority" class="button">YouTube</a>
+        <a href="https://twitter.com/ModerateMaj" class="button">Twitter/X</a>
+        <a href="https://www.tiktok.com/@TheModerateMajority" class="button">TikTok</a>
+    </section>
+
+    <!-- Footer -->
     <footer>
         <p>&copy; 2025 The Moderate Majority. All rights reserved.</p>
     </footer>
+
+    <!-- JavaScript to Fetch Content -->
+    <script>
+        const spaceId = "YOUR_SPACE_ID";  
+        const accessToken = "YOUR_ACCESS_TOKEN";  
+
+        // Fetch Latest Episodes
+        async function fetchEpisodes() {
+            const url = `https://cdn.contentful.com/spaces/${spaceId}/environments/master/entries?content_type=episode`;
+            const response = await fetch(url, {
+                headers: { Authorization: `Bearer ${accessToken}` }
+            });
+            const data = await response.json();
+
+            const episodesList = document.getElementById("episodes-list");
+            episodesList.innerHTML = "";
+
+            data.items.forEach(item => {
+                const title = item.fields.title;
+                const videoUrl = item.fields.videoUrl;
+                const description = item.fields.description;
+
+                episodesList.innerHTML += `
+                    <div class="episode">
+                        <h3>${title}</h3>
+                        <p>${description}</p>
+                        <iframe width="560" height="315" src="${videoUrl}" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                `;
+            });
+        }
+
+        // Fetch Merch
+        async function fetchMerch() {
+            const url = `https://cdn.contentful.com/spaces/${spaceId}/environments/master/entries?content_type=merch`;
+            const response = await fetch(url, {
+                headers: { Authorization: `Bearer ${accessToken}` }
+            });
+            const data = await response.json();
+
+            const merchContainer = document.getElementById("merch-container");
+            merchContainer.innerHTML = "";
+
+            data.items.forEach(item => {
+                const name = item.fields.productName;
+                const price = item.fields.price;
+                const imageUrl = item.fields.image.fields.file.url;
+                const stripeLink = item.fields.stripeCheckoutLink;
+
+                merchContainer.innerHTML += `
+                    <div class="product">
+                        <img src="https:${imageUrl}" alt="${name}" width="200">
+                        <h3>${name}</h3>
+                        <p>$${price}</p>
+                        <a href="${stripeLink}" class="button">Buy Now</a>
+                    </div>
+                `;
+            });
+        }
+
+        fetchEpisodes();
+        fetchMerch();
+    </script>
 
 </body>
 </html>
